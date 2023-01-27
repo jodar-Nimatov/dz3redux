@@ -11,22 +11,31 @@ const initialState = {
     usersCount: 1
 }
 
-export default(state = initialState, action) => {
-    switch(action.type){
+export default (state = initialState, action) => {
+    switch (action.type) {
         case 'ADD': {
-            return{
+            return {
                 ...state,
                 users: [...state.users, {
-                    name: action.name, 
+                    name: action.name,
                     age: action.age,
                     id: state.users[state.users.length - 1].id + 1,
                 }],
                 usersCount: state.usersCount + 1
             }
         }
-        case 'DELETE': 
-            return{
-                users: [ ...state.users.filter(user => user.id !== action.payload)]
+        case 'DELETE':
+            return {
+                users: [...state.users.filter(user => user.id !== action.payload)]
+            }
+        case 'DELETEALL':
+            return  {
+                users: []
+            }
+        case 'CHANGE':
+
+            return {
+                
             }
 
         default: return state
@@ -36,8 +45,8 @@ export default(state = initialState, action) => {
 export const addUsers = (name, age) => {
     return (dispatch) => {
         return dispatch({
-            type: 'ADD', 
-            name: name, 
+            type: 'ADD',
+            name: name,
             age: age
         })
     }
@@ -50,7 +59,17 @@ export const removeUser = (id) => {
     }
 }
 
+export const removeAllUsers = (users) => {
+    return {
+        type: 'DELETEALL',
+        payload: users
+    }
+}
 
 
-
-
+export const changeUser = (name) => {
+    return {
+        type: 'CHANGE',
+        payload: name
+    }
+}
